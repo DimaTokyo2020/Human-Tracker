@@ -1,0 +1,8 @@
+- clone repository of traking people
+
+
+
+
+**Intalltion:
+- MiniConda.
+
