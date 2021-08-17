@@ -8,7 +8,7 @@ from random import randint
 imgcounter = 1
 basename = "image%s.png"
 
-HOST = '192.168.1.25'
+HOST = '192.168.1.100'
 PORT = 1818
 
 connected_clients_sockets = []
@@ -21,6 +21,7 @@ server_socket.listen(10)
 
 connected_clients_sockets.append(server_socket)
 buffer_size = 469766
+#buffer_size2 = 
 
 while True:
     print('statr')
@@ -38,12 +39,20 @@ while True:
         else:
             try:
                 #print('Buffer size is %s' % buffer_size)
+                
+                data_size = sock.recv(buffer_size)
+                print('got data: ')
+                file_size = int(data_size.decode('utf-8')[2:])
+                print('the size is : ' + str(file_size))
+
                 data = sock.recv(buffer_size)
+                print('dtat dima: ' + str(data))
+                #8324457
                 continueLoop = True
                 while continueLoop:
-                 data += sock.recv(buffer_size)
+                 data += sock.recv(buffer_size)  
                  print('len: ' + str(len(data)))          
-                 if len(data) == buffer_size:
+                 if len(data) == file_size:
                   print('break')
                   continueLoop = False       
                 print('After loop')
@@ -88,9 +97,24 @@ while True:
                     buffer_size = 469766
                     sock.shutdown()
                     print('saved3 ')
-            except:
+            except Exception as e:
+                print(e)
                 sock.close()
                 connected_clients_sockets.remove(sock)
                 continue
         imgcounter += 1
 server_socket.close() 
+
+
+
+
+
+
+
+def stop():
+    time.sleep(10) 
+    
+
+
+
+
